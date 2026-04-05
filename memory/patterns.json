@@ -1,0 +1,36 @@
+{
+  "port_patterns": {
+    "22": 2,
+    "21": 1,
+    "80": 1,
+    "3306": 1
+  },
+  "service_patterns": {
+    "OpenSSH 10.2p1 Debian 5": 1,
+    "FTP": 1,
+    "SSH": 1,
+    "HTTP": 1,
+    "MariaDB": 1
+  },
+  "tool_wins": {
+    "nmap": 2,
+    "searchsploit": 1,
+    "curl": 1,
+    "gobuster": 1,
+    "hydra": 1
+  },
+  "common_credentials": [
+    "Daedalus:g2e55kh4ck5r",
+    "M!n0taur:aminotauro",
+    "Eurycliedes:greeklover",
+    "Menekrates:greeksalad",
+    "Philostratos:nickthegreek",
+    "Daedalus:1989dontforgetyourpass"
+  ],
+  "ctf_patterns": {
+    "tryhackme": [],
+    "hackthebox": []
+  },
+  "total_assessments": 2,
+  "last_updated": "2026-04-04"
+}
