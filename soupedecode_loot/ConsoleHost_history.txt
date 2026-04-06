@@ -1,0 +1,3 @@
+zhoq;i
+whoami
+logoff

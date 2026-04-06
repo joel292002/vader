@@ -1,0 +1,35 @@
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+
+[-] User bmark0 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User otara1 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User kleo2 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User eyara3 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User pquinn4 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User jharper5 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User bxenia6 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User gmona7 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User oaaron8 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User pleo9 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User evictor10 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User wreed11 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User bgavin12 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User ndelia13 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User akevin14 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User kxenia15 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User ycody16 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User qnora17 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User dyvonne18 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User qxenia19 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User rreed20 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User icody21 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User ftom22 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User ijake23 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User rpenny24 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User jiris25 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User colivia26 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User pyvonne27 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User zfrank28 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User ybob317 doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User file_svc doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User Administrator doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User guest doesn't have UF_DONT_REQUIRE_PREAUTH set

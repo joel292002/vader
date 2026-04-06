@@ -1,0 +1,41 @@
+# Nmap 7.98 scan initiated Sun Apr  5 19:42:06 2026 as: /usr/lib/nmap/nmap --privileged -sV -sC --open -T4 -oN /home/kali/vader/swarm/nmap_initial.txt 10.65.186.22 10.65.186.22
+Nmap scan report for 10.65.186.22
+Host is up (0.032s latency).
+Not shown: 988 filtered tcp ports (no-response)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT     STATE SERVICE       VERSION
+53/tcp   open  domain        Simple DNS Plus
+88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2026-04-05 23:42:25Z)
+135/tcp  open  msrpc         Microsoft Windows RPC
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: SOUPEDECODE.LOCAL, Site: Default-First-Site-Name)
+445/tcp  open  microsoft-ds?
+464/tcp  open  kpasswd5?
+593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp  open  tcpwrapped
+3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: SOUPEDECODE.LOCAL, Site: Default-First-Site-Name)
+3269/tcp open  tcpwrapped
+3389/tcp open  ms-wbt-server Microsoft Terminal Services
+| ssl-cert: Subject: commonName=DC01.SOUPEDECODE.LOCAL
+| Not valid before: 2026-04-04T23:40:05
+|_Not valid after:  2026-10-04T23:40:05
+|_ssl-date: 2026-04-05T23:43:07+00:00; +2s from scanner time.
+| rdp-ntlm-info: 
+|   Target_Name: SOUPEDECODE
+|   NetBIOS_Domain_Name: SOUPEDECODE
+|   NetBIOS_Computer_Name: DC01
+|   DNS_Domain_Name: SOUPEDECODE.LOCAL
+|   DNS_Computer_Name: DC01.SOUPEDECODE.LOCAL
+|   Product_Version: 10.0.20348
+|_  System_Time: 2026-04-05T23:42:27+00:00
+Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-security-mode: 
+|   3.1.1: 
+|_    Message signing enabled and required
+| smb2-time: 
+|   date: 2026-04-05T23:42:28
+|_  start_date: N/A
+|_clock-skew: mean: 1s, deviation: 0s, median: 1s
+

@@ -1,0 +1,13 @@
+file_svc:filesvc
+file_svc:file_svc
+backup_svc:backupsvc
+backup_svc:backup_svc
+web_svc:websvc
+web_svc:web_svc
+monitoring_svc:monitoringsvc
+monitoring_svc:monitoring_svc
+firewall_svc:firewallsvc
+firewall_svc:firewall_svc
+charlie:charlie
+admin:admin
+Administrator:Administrator

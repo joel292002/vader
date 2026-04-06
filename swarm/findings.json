@@ -1,0 +1,28 @@
+{
+  "target": "",
+  "platform": "",
+  "authorized": false,
+  "started_at": "",
+  "status": "idle",
+  "open_ports": [],
+  "credentials": [],
+  "flags": [],
+  "hashes": [],
+  "shell_access": false,
+  "root_access": false,
+  "urls": [],
+  "interesting_files": [],
+  "next_command": "",
+  "last_output": "",
+  "last_command_run": "",
+  "codex_notes": "",
+  "raw_outputs": [],
+  "agent_status": {
+    "recon": "idle",
+    "web": "idle",
+    "brute": "idle",
+    "exploit": "idle",
+    "report": "idle"
+  },
+  "timeline": []
+}

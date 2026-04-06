@@ -1,36 +1,173 @@
 {
+  "identity": {
+    "name": "Vader",
+    "role": "adaptive security agent"
+  },
+  "assessments_completed": 1,
+  "strengths": [
+    "web enumeration",
+    "git mining",
+    "credential extraction"
+  ],
+  "weaknesses": [
+    "FTP enumeration depth",
+    "flag ordering assumptions"
+  ],
+  "confirmed_lessons": [
+    {
+      "source": "Labyrinth",
+      "lesson": "Flag text hints at its own location (ftpFLA9 = FTP)."
+    },
+    {
+      "source": "Labyrinth",
+      "lesson": "Never assume flag discovery order = flag number."
+    },
+    {
+      "source": "Labyrinth",
+      "lesson": "Try named user FTP when hints mention specific names."
+    },
+    {
+      "source": "Labyrinth",
+      "lesson": "Git exposure: always mine ALL branches not just main."
+    },
+    {
+      "source": "Labyrinth",
+      "lesson": "Credentials found anywhere = try everywhere immediately."
+    },
+    {
+      "source": "Labyrinth",
+      "lesson": "MySQL port 3306 almost always rejects remote on THM."
+    }
+  ],
   "port_patterns": {
-    "22": 2,
-    "21": 1,
-    "80": 1,
-    "3306": 1
+    "21": {
+      "seen_in": [
+        "Labyrinth"
+      ]
+    },
+    "22": {
+      "seen_in": [
+        "Labyrinth"
+      ]
+    },
+    "80": {
+      "seen_in": [
+        "Labyrinth"
+      ]
+    },
+    "3306": {
+      "seen_in": [
+        "Labyrinth"
+      ]
+    }
   },
   "service_patterns": {
-    "OpenSSH 10.2p1 Debian 5": 1,
-    "FTP": 1,
-    "SSH": 1,
-    "HTTP": 1,
-    "MariaDB": 1
+    "ProFTPD": {
+      "seen_in": [
+        "Labyrinth"
+      ]
+    },
+    "OpenSSH 8.2p1 Ubuntu 4ubuntu0.13": {
+      "seen_in": [
+        "Labyrinth"
+      ]
+    },
+    "Apache httpd 2.4.41 ((Ubuntu))": {
+      "seen_in": [
+        "Labyrinth"
+      ]
+    },
+    "MariaDB 10.3.24 or later (unauthorized)": {
+      "seen_in": [
+        "Labyrinth"
+      ]
+    }
   },
-  "tool_wins": {
-    "nmap": 2,
-    "searchsploit": 1,
-    "curl": 1,
-    "gobuster": 1,
-    "hydra": 1
-  },
-  "common_credentials": [
-    "Daedalus:g2e55kh4ck5r",
-    "M!n0taur:aminotauro",
-    "Eurycliedes:greeklover",
-    "Menekrates:greeksalad",
-    "Philostratos:nickthegreek",
-    "Daedalus:1989dontforgetyourpass"
+  "tool_effectiveness": [
+    {
+      "tool": "nmap",
+      "rank": 1
+    },
+    {
+      "tool": "curl",
+      "rank": 2
+    },
+    {
+      "tool": "git-mirror",
+      "rank": 3
+    },
+    {
+      "tool": "gobuster",
+      "rank": 4
+    },
+    {
+      "tool": "hydra",
+      "rank": 5
+    }
   ],
-  "ctf_patterns": {
-    "tryhackme": [],
+  "platform_patterns": {
+    "tryhackme": [
+      "Hints often redirect from a minor service to the real weakness.",
+      "Naming themes often become usernames.",
+      "Remote MySQL commonly blocks direct access.",
+      "Flag text can hint at location."
+    ],
     "hackthebox": []
   },
-  "total_assessments": 2,
-  "last_updated": "2026-04-04"
+  "credential_patterns": {
+    "reuse_rule": "Credentials found anywhere should be tested everywhere immediately.",
+    "observed_credentials": [
+      "Eurycliedes:greeklover",
+      "Menekrates:greeksalad",
+      "Philostratos:nickthegreek",
+      "Daedalus:g2e55kh4ck5r",
+      "M!n0taur:aminotauro",
+      "Cerberos:soviet911210036173",
+      "Pegasus:pizzaeater_1",
+      "Chiron:hiphophugosoviet18",
+      "Centaurus:elcentauro",
+      "Daedalus:1989dontforgetyourpass"
+    ]
+  },
+  "dead_ends_to_avoid": [
+    "SSH login attempts with current and historical app credentials did not produce a shell",
+    "FTP credential attempts did not reveal non-anonymous access",
+    "MariaDB rejected remote connections from this host with `Host ... is not allowed to connect`",
+    "Live PHP endpoints returned empty bodies or errors, preventing app-based exploitation",
+    "ProFTPD `mod_copy` was not available",
+    "Web artifact checks did not reveal additional flags beyond the source-exposed one",
+    "Stopping Git analysis at main.",
+    "Assuming read-only FTP is irrelevant.",
+    "Assuming flag numbering equals discovery order."
+  ],
+  "winning_strategies": [
+    "Full TCP recon with `nmap`",
+    "Mirroring `/.git/` and reconstructing the repository",
+    "Mining Git history for credentials and code paths",
+    "Pulling the live `dbCreate.sql` directly",
+    "Broad recon first, then pivot into the richest exposed artifact.",
+    "Cross-test every recovered credential immediately."
+  ],
+  "rooms": {
+    "labyrinth": {
+      "platform": "TryHackMe",
+      "target": "10.65.156.241",
+      "ports": [
+        21,
+        22,
+        80,
+        3306
+      ],
+      "services": [
+        "ProFTPD",
+        "OpenSSH 8.2p1 Ubuntu 4ubuntu0.13",
+        "Apache httpd 2.4.41 ((Ubuntu))",
+        "MariaDB 10.3.24 or later (unauthorized)"
+      ],
+      "flags": [
+        "fla6{7H@Ts_tHe_Dat48as3_F149}"
+      ]
+    }
+  },
+  "last_updated": "2026-04-05"
 }

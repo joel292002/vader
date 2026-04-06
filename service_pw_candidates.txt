@@ -1,0 +1,15 @@
+file_svc
+filesvc
+backup_svc
+backupsvc
+web_svc
+websvc
+monitoring_svc
+monitoringsvc
+firewall_svc
+firewallsvc
+File_svc
+Backup_svc
+Web_svc
+Monitoring_svc
+Firewall_svc
