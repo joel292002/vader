@@ -138,6 +138,16 @@ class AssessmentData:
     strengths: list[str]
     weaknesses: list[str]
     evolution_summary: str
+    key_lesson: str
+
+
+@dataclass
+class SoulState:
+    total_assessments: int
+    strengths: list[str]
+    weaknesses: list[str]
+    evolution_log: list[str]
+    recent_lessons: list[str]
 
 
 def read_text(path: Path) -> str:
@@ -189,6 +199,21 @@ def bullet_lines(block: str) -> list[str]:
         if line.startswith("- "):
             items.append(line[2:].strip())
     return items
+
+
+def extract_total_from_soul(text: str) -> int:
+    match = re.search(r"^- Total:\s*(\d+)\s*$", text, flags=re.MULTILINE)
+    return int(match.group(1)) if match else 0
+
+
+def parse_soul_state(text: str) -> SoulState:
+    return SoulState(
+        total_assessments=extract_total_from_soul(text),
+        strengths=dedupe(bullet_lines(section_body(text, "Strengths")) or DEFAULT_STRENGTHS),
+        weaknesses=dedupe(bullet_lines(section_body(text, "Weaknesses")) or DEFAULT_WEAKNESSES),
+        evolution_log=dedupe(bullet_lines(section_body(text, "Evolution Log"))),
+        recent_lessons=dedupe(bullet_lines(section_body(text, "Confirmed Lessons From Recent Assessments"))),
+    )
 
 
 def numbered_lines(block: str) -> list[str]:
@@ -489,12 +514,14 @@ def parse_report(report_path: Path) -> AssessmentData:
         strengths=strengths,
         weaknesses=weaknesses,
         evolution_summary=summarize_evolution(room, attack_chain, len(flags_found), flags_total),
+        key_lesson=lessons[0],
     )
 
 
-def normalize_patterns(payload: dict[str, Any]) -> dict[str, Any]:
+def normalize_patterns(payload: dict[str, Any], soul_state: SoulState | None = None) -> dict[str, Any]:
     identity = payload.get("identity") or {"name": "Vader", "role": "adaptive security agent"}
-    total = int(payload.get("total_assessments") or payload.get("assessments_completed") or 0)
+    soul_state = soul_state or SoulState(0, DEFAULT_STRENGTHS, DEFAULT_WEAKNESSES, [], [])
+    total = int(payload.get("total_assessments") or payload.get("assessments_completed") or soul_state.total_assessments or 0)
     successful = int(payload.get("successful_assessments") or 0)
     processed_reports = payload.get("processed_reports") or []
     if isinstance(processed_reports, dict):
@@ -543,8 +570,8 @@ def normalize_patterns(payload: dict[str, Any]) -> dict[str, Any]:
         "assessments_completed": total,
         "successful_assessments": successful,
         "win_rate": round((successful / total) * 100, 1) if total else 0.0,
-        "strengths": dedupe(payload.get("strengths") or DEFAULT_STRENGTHS),
-        "weaknesses": dedupe(payload.get("weaknesses") or DEFAULT_WEAKNESSES),
+        "strengths": dedupe(payload.get("strengths") or soul_state.strengths or DEFAULT_STRENGTHS),
+        "weaknesses": dedupe(payload.get("weaknesses") or soul_state.weaknesses or DEFAULT_WEAKNESSES),
         "confirmed_lessons": payload.get("confirmed_lessons") or [],
         "tool_effectiveness": tools,
         "os_patterns": os_patterns,
@@ -760,9 +787,11 @@ def build_soul(patterns: dict[str, Any]) -> str:
         summary = room.get("attack_chain", [])
         flags_found = room.get("flags_found_count", 0)
         flags_total = room.get("flags_total", 0)
+        os_type = room.get("os_type", "Unknown")
+        lesson = normalize_whitespace((room.get("lessons") or ["Completed assessment"])[0])
         evolution_lines.append(
             f"- {room.get('updated', date.today().isoformat())} | {room.get('room', 'Unknown')} | "
-            f"{' -> '.join(summary[:4]) if summary else 'Completed assessment'} ({flags_found}/{flags_total} flags)."
+            f"{os_type} | {flags_found}/{flags_total} flags | {lesson}"
         )
 
     return "\n".join(
@@ -805,6 +834,14 @@ def build_agent_prompt(patterns: dict[str, Any]) -> str:
             pattern_lines.append(f"- {os_type}: seen in {meta['count']} assessment(s) ({rooms})")
     if not pattern_lines:
         pattern_lines = ["- Let observed services drive the next pivot."]
+    latest_chains: list[str] = []
+    ordered_rooms = sorted(patterns["rooms"].values(), key=lambda item: item.get("updated", ""), reverse=True)
+    for room in ordered_rooms[:5]:
+        chain = room.get("attack_chain", [])
+        if chain:
+            latest_chains.append(f"- {room.get('room', 'Unknown')}: {' -> '.join(chain)}")
+    if not latest_chains:
+        latest_chains = ["- No confirmed chains logged yet."]
 
     lines = [
         "Read `CLAUDE.md`, `soul.md`, `knowledge.md`, and `patterns.json`.",
@@ -818,6 +855,9 @@ def build_agent_prompt(patterns: dict[str, Any]) -> str:
         "",
         "## Pattern Recognition",
         *pattern_lines,
+        "",
+        "## Latest Confirmed Chains",
+        *latest_chains,
         "",
         "## Strength Bias",
         *(patterns["strengths"][:5] and [f"- Lean on {item} when the evidence supports it." for item in patterns["strengths"][:5]] or ["- Use the right tool for the evidence you have."]),
@@ -850,9 +890,10 @@ def main() -> None:
         "patterns": read_json(PATTERNS_PATH),
         "agent_prompt": read_text(AGENT_PROMPT_PATH),
     }
+    soul_state = parse_soul_state(current_state["soul"])
 
-    patterns_before = normalize_patterns(current_state["patterns"])
-    patterns_after, already_processed = merge_assessment(normalize_patterns(current_state["patterns"]), assessment)
+    patterns_before = normalize_patterns(current_state["patterns"], soul_state)
+    patterns_after, already_processed = merge_assessment(normalize_patterns(current_state["patterns"], soul_state), assessment)
 
     knowledge_text = build_knowledge(patterns_after)
     soul_text = build_soul(patterns_after)

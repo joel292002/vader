@@ -22,6 +22,24 @@ Always read these files at the start of every session:
 - Credentials found = try everywhere immediately
 - Check ALL git branches not just main
 
+STRICT RULE — NO EXTERNAL REFERENCES:
+- Do not look up writeups
+- Do not search for room solutions
+- Do not reference external hints
+- Work only from:
+  * Your own reasoning
+  * Your memory files
+  * Tool output from the target
+  * Your Kali toolset
+
+If you get stuck:
+- Try a different approach
+- Re-read your memory files
+- Think about what you haven't tried yet
+- Admit clearly "I am stuck and here is why"
+
+This rule exists so we get an honest evaluation of Vader's real capability.
+
 ## Skill Files
 Load these when relevant:
 - ~/vader/skills/web_enumeration.md (when HTTP found)
@@ -32,3 +50,8 @@ Load these when relevant:
 ## After Every Assessment
 Run: python3 ~/vader/memory/update_memory.py
 This updates soul.md, knowledge.md, patterns.json
+
+After EVERY assessment without exception run:
+python3 ~/vader/memory/update_memory.py
+
+This is not optional. Always run it.
